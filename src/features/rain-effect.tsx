@@ -62,10 +62,7 @@ const RainEffect = () => {
         u_rain: { value: 0.7 },
         u_pulse: { value: 0.0 },
         u_pulse_amp: { value: 0.0 },
-        u_is_decrease: { value: 0.0 },
-        u_disable_lightning: { value: 0.0 },
-        u_speed: { value: 1.0 },
-        u_story: { value: 0.0 }
+        u_speed: { value: 1.0 }
       },
       vertexShader: `
         varying vec2 vUv;
@@ -85,10 +82,7 @@ const RainEffect = () => {
         uniform float u_rain;
         uniform float u_pulse;
         uniform float u_pulse_amp;
-        uniform float u_is_decrease;
-        uniform float u_disable_lightning;
         uniform float u_speed;
-        uniform float u_story;
 
         #define S(a, b, t) smoothstep(a, b, t)
         //#define CHEAP_NORMALS
@@ -184,40 +178,7 @@ const RainEffect = () => {
           float maxBlur = mix(3., 6., rainAmount);
           float minBlur = 2.;
 
-          // 故事（最终心形状态）当u_story启用时：近似原始HAS_HEART行为
-          float heart = 0.0;
-          if (u_story > 0.5) {
-            float story = 1.0; // u_story已经表示进入最终状态
-            // 重新映射t，使雨滴减速像原始的那样
-            float tt = min(1.0, u_story);
-            float t2 = 1.0 - tt;
-            t2 = (1.0 - t2 * t2) * 70.0;
-            float zoom = mix(.3, 1.2, story);
-            uv *= zoom;
-            minBlur = 4.0 + smoothstep(.5, 1.0, story) * 3.0;
-            maxBlur = 6.0 + smoothstep(.5, 1.0, story) * 1.5;
-            vec2 hv = uv - vec2(0.0, -0.1);
-            hv.x *= .5;
-            float s = smoothstep(70.0, 110.0, 70.0); // 近似最终的小心形
-            hv.y -= sqrt(abs(hv.x)) * .5 * s;
-            heart = length(hv);
-            heart = smoothstep(.2 * s, .4 * s, heart) * s;
-            // 仅在心形区域下雨
-            rainAmount = heart;
-            maxBlur -= heart;
-            uv *= 1.5;
-            t = t2 * .25;
-          } else if (u_is_decrease > 0.5) {
-            // 减少时的短暂心形（短脉冲）
-            vec2 hv = uv-vec2(.0, -.1);
-            hv.x *= .5;
-            float s2 = 1.0;
-            hv.y -= sqrt(abs(hv.x))*.5*s2;
-            heart = length(hv);
-            heart = smoothstep(.2*s2, .4*s2, heart) * s2;
-            rainAmount = mix(rainAmount, 0.0, heart);
-          }
-          float story = 0.;
+
           float zoom = -cos(T*.2);
           uv *= .7+zoom*.3;
           UV = (UV-.5)*(.9+zoom*.1)+.5;
@@ -233,31 +194,25 @@ const RainEffect = () => {
             float cy = Drops(uv+e.yx, t, staticDrops, layer1, layer2).x;
             vec2 n = vec2(cx-c.x, cy-c.x);
           #endif
-          #ifdef HAS_HEART
-          n *= 1.-S(60., 85., T);
-          c.y *= 1.-S(80., 100., T)*.8;
-          #endif
+
           // textureLod需要GLSL3 / 显式版本；使用texture2D以兼容
           float focus = mix(maxBlur-c.y, minBlur, S(.1, .2, c.x));
           vec3 col = texture2D(iChannel0, UV+n).rgb;
           #ifdef USE_POST_PROCESSING
           t = (T+3.)*.5;
-          float colFade = sin(t*.2)*.5+.5+story;
+          float colFade = sin(t*.2)*.5+.5;
           col *= mix(vec3(1.), vec3(.8, .9, 1.3), colFade);
           // 禁用自动淡入；仅通过着色器输入控制全强度
           float fade = 1.0;
-          // 仅在未禁用且雨量高时才闪电
-          float lightning = 0.0;
-          if (u_disable_lightning < 0.5 && rainAmount > 0.5) {
-            lightning = sin(t*sin(t*10.));
-            lightning *= pow(max(0., sin(t+sin(t))), 10.);
-          }
-          col *= 1.+lightning*fade*mix(1., .1, story*story);
+          // 禁用闪电效果
+          // float lightning = 0.0;
+          // if (u_disable_lightning < 0.5 && rainAmount > 0.5) {
+          //   lightning = sin(t*sin(t*10.));
+          //   lightning *= pow(max(0., sin(t+sin(t))), 10.);
+          // }
+          // col *= 1.+lightning*fade*mix(1., .1, story*story);
           col *= 1.-dot(UV-=.5, UV);
-          #ifdef HAS_HEART
-            col = mix(pow(col, vec3(1.2)), col, heart);
-            fade *= S(102., 97., T);
-          #endif
+
           col *= fade;
           #endif
           // Make rain effect very subtle and transparent
