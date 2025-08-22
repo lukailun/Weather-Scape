@@ -1,0 +1,31 @@
+{
+  "name": "weather-scape",
+  "displayName": "Weather scape",
+  "version": "0.0.1",
+  "description": "Transform your browser experience with real-time weather themes. Watch as your browser dynamically changes with the weather - sunny days bring warm sunlight effects, rainy days create soothing rain animations, and cloudy skies add gentle cloud movements. WeatherScape automatically syncs with your local weather to create an immersive, ever-changing browsing environment.",
+  "author": "Karen",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build",
+    "package": "plasmo package"
+  },
+  "dependencies": {
+    "plasmo": "0.90.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@types/chrome": "0.0.258",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    "prettier": "3.2.4",
+    "typescript": "5.3.3"
+  },
+  "manifest": {
+    "host_permissions": [
+      "https://*/*"
+    ]
+  }
+}
