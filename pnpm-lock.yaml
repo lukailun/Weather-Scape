@@ -11,18 +11,12 @@ importers:
       plasmo:
         specifier: 0.90.5
         version: 0.90.5(@swc/core@1.13.4(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(@types/node@24.3.0)(postcss@8.5.6)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      postcss:
-        specifier: 8.5.6
-        version: 8.5.6
       react:
         specifier: 19.1.1
         version: 19.1.1
       react-dom:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
-      tailwindcss:
-        specifier: 3.4.17
-        version: 3.4.17
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.6.2
@@ -39,9 +33,18 @@ importers:
       '@types/react-dom':
         specifier: 19.1.7
         version: 19.1.7(@types/react@19.1.10)
+      autoprefixer:
+        specifier: ^10.4.21
+        version: 10.4.21(postcss@8.5.6)
+      postcss:
+        specifier: 8.5.6
+        version: 8.5.6
       prettier:
         specifier: 3.6.2
         version: 3.6.2
+      tailwindcss:
+        specifier: 3.4.17
+        version: 3.4.17
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -1635,6 +1638,13 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
+  autoprefixer@10.4.21:
+    resolution: {integrity: sha512-O+A6LWV5LDHSJD3LjHYoNi4VLsj/Whi7k6zG12xTYaU4cQ8oxQGckXNX8cRHK5yOZ/ppVHe0ZBXGzSV9jXdVbQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+
   axobject-query@3.2.4:
     resolution: {integrity: sha512-aPTElBrbifBU1krmZxGZOlBkslORe7Ll7+BDnI50Wy4LgOt69luMgevkDfTq1O/ZgprooPCtWpjCwKSZw/iZ4A==}
     engines: {node: '>= 0.4'}
@@ -1993,6 +2003,9 @@ packages:
   form-data-encoder@4.1.0:
     resolution: {integrity: sha512-G6NsmEW15s0Uw9XnCg+33H3ViYRyiM0hMrMhhqQOR8NFc5GhYrI+6I3u7OTw7b91J2g8rtvMBZJDbcGb2YUniw==}
     engines: {node: '>= 18'}
+
+  fraction.js@4.3.7:
+    resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
   fs-extra@11.1.1:
     resolution: {integrity: sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==}
@@ -2545,6 +2558,10 @@ packages:
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
+    engines: {node: '>=0.10.0'}
+
+  normalize-range@0.1.2:
+    resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
 
   normalize-url@8.0.2:
@@ -4974,6 +4991,16 @@ snapshots:
 
   array-union@2.1.0: {}
 
+  autoprefixer@10.4.21(postcss@8.5.6):
+    dependencies:
+      browserslist: 4.25.3
+      caniuse-lite: 1.0.30001736
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.6
+      postcss-value-parser: 4.2.0
+
   axobject-query@3.2.4: {}
 
   balanced-match@1.0.2: {}
@@ -5343,6 +5370,8 @@ snapshots:
   form-data-encoder@2.1.4: {}
 
   form-data-encoder@4.1.0: {}
+
+  fraction.js@4.3.7: {}
 
   fs-extra@11.1.1:
     dependencies:
@@ -5835,6 +5864,8 @@ snapshots:
   node-releases@2.0.19: {}
 
   normalize-path@3.0.0: {}
+
+  normalize-range@0.1.2: {}
 
   normalize-url@8.0.2: {}
 
