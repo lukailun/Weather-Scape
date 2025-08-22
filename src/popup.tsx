@@ -1,8 +1,9 @@
+import "@/style.css"
 import { CountButton } from "@/features/count-button"
 
 function IndexPopup() {
   return (
-    <div className="weatherscape-flex weatherscape-items-center weatherscape-justify-center weatherscape-h-16 weatherscape-w-40">
+    <div className="ws-flex ws-items-center ws-justify-center ws-h-16 ws-w-40">
       <CountButton />
     </div>
   )

@@ -10,7 +10,9 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "4.1.12",
     "plasmo": "0.90.5",
+    "postcss": "8.5.6",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "tailwindcss": "4.1.12"
@@ -21,7 +23,7 @@
     "@types/node": "24.3.0",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
-    "postcss": "8.5.6",
+    "autoprefixer": "^10.4.21",
     "prettier": "3.6.2",
     "typescript": "5.9.2"
   },

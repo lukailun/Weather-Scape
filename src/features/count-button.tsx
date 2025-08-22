@@ -7,11 +7,11 @@ export const CountButton = () => {
     <button
       onClick={() => increase()}
       type="button"
-      className="weatherscape-flex weatherscape-flex-row weatherscape-items-center weatherscape-px-4 weatherscape-py-2 weatherscape-text-sm weatherscape-rounded-lg weatherscape-transition-all weatherscape-border-none
-      weatherscape-shadow-lg hover:weatherscape-shadow-md
-      active:weatherscape-scale-105 weatherscape-bg-slate-50 hover:weatherscape-bg-slate-100 weatherscape-text-slate-800 hover:weatherscape-text-slate-900">
+      className="ws-flex ws-flex-row ws-items-center ws-px-4 ws-py-2 ws-text-sm ws-rounded-lg ws-transition-all ws-border-none
+      ws-shadow-lg hover:ws-shadow-md
+      active:ws-scale-105 ws-bg-slate-50 hover:ws-bg-slate-100 ws-text-slate-800 hover:ws-text-slate-900">
       Count:
-      <span className="weatherscape-inline-flex weatherscape-items-center weatherscape-justify-center weatherscape-w-8 weatherscape-h-4 weatherscape-ml-2 weatherscape-text-xs weatherscape-font-semibold weatherscape-rounded-full">
+      <span className="ws-inline-flex ws-items-center ws-justify-center ws-w-8 ws-h-4 ws-ml-2 ws-text-xs ws-font-semibold ws-rounded-full">
         {count}
       </span>
     </button>
