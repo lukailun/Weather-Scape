@@ -1,5 +1,6 @@
 import cssText from "data-text:@/style.css"
 import type { PlasmoCSConfig } from "plasmo"
+import RainEffect from "@/features/rain-effect"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
@@ -19,9 +20,7 @@ export const getStyle = (): HTMLStyleElement => {
 }
 
 const WeatherOverlay = () => {
-  return (
-    <div className="z-[99999] fixed top-0 left-0 w-full h-full bg-red-500 opacity-50 pointer-events-none mix-blend-multiply" />
-  )
+  return <RainEffect />
 }
 
 export default WeatherOverlay
