@@ -23,36 +23,32 @@ const RainEffect = () => {
 
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
-    // Create a full-screen quad
     const geometry = new PlaneGeometry(2, 2)
 
-    // Create a procedural background texture as iChannel0
     function makeBackgroundTexture(size = 1024) {
-      const c = document.createElement('canvas')
-      c.width = c.height = size
-      const ctx = c.getContext('2d')
-      if (!ctx) return new Texture()
+      const canvas = document.createElement('canvas')
+      canvas.width = canvas.height = size
+      const context = canvas.getContext('2d')
+      if (!context) return new Texture()
       
-      // 渐变 - 使用更透明的颜色
-      const g = ctx.createLinearGradient(0, 0, size, size)
-      g.addColorStop(0, 'rgba(16, 24, 38, 0.05)')  // 非常透明
-      g.addColorStop(0.5, 'rgba(43, 65, 88, 0.05)') // 非常透明
-      g.addColorStop(1, 'rgba(16, 16, 38, 0.05)')   // 非常透明
-      ctx.fillStyle = g
-      ctx.fillRect(0, 0, size, size)
+      const gradient = context.createLinearGradient(0, 0, size, size)
+      gradient.addColorStop(0, 'rgba(16, 24, 38, 0.05)') 
+      gradient.addColorStop(0.5, 'rgba(43, 65, 88, 0.05)') // 非常透明
+      gradient.addColorStop(1, 'rgba(16, 16, 38, 0.05)')   // 非常透明
+      context.fillStyle = gradient
+      context.fillRect(0, 0, size, size)
       
-      // 简单的星星/噪声 - 使用更透明的颜色
       for (let i = 0; i < 2000; i++) {
         const x = Math.random() * size
         const y = Math.random() * size
         const r = Math.random() * 1.5
-        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})` // 更透明
-        ctx.beginPath()
-        ctx.arc(x, y, r, 0, Math.PI * 2)
-        ctx.fill()
+        context.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})` // 更透明
+        context.beginPath()
+        context.arc(x, y, r, 0, Math.PI * 2)
+        context.fill()
       }
       
-      return new CanvasTexture(c)
+      return new CanvasTexture(canvas)
     }
 
     const bgTexture = makeBackgroundTexture(1024)
@@ -309,7 +305,6 @@ const RainEffect = () => {
     window.addEventListener('resize', onResize, { passive: true })
     onResize()
 
-    // Animation loop
     const clock = new Clock()
     function animate() {
       animationRef.current = requestAnimationFrame(animate)
@@ -339,7 +334,6 @@ const RainEffect = () => {
     <canvas
       ref={canvasRef}
       className="z-[-1] fixed top-0 left-0 w-full h-full pointer-events-none"
-      style={{ opacity: 0.7 }}
     />
   )
 }
