@@ -2,7 +2,7 @@
   "name": "Weather Scape - Dynamic Weather Browser Themes",
   "displayName": "WeatherScape",
   "version": "0.0.1",
-  "description": "Transform your browser experience with real-time weather themes. Watch as your browser dynamically changes with the weather - sunny days bring warm sunlight effects, rainy days create soothing rain animations, and cloudy skies add gentle cloud movements. WeatherScape automatically syncs with your local weather to create an immersive, ever-changing browsing environment.",
+  "description": "Transform your browser experience with real-time weather themes. Watch as your browser dynamically changes with the weather - sunny days bring warm sunlight effects, rainy days create soothing rain animations, and cloudy skies add gentle cloud movements.",
   "author": "Karen",
   "scripts": {
     "dev": "plasmo dev",
