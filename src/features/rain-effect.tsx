@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { Scene, WebGLRenderer, ShaderMaterial, OrthographicCamera, PlaneGeometry, Texture, CanvasTexture, Vector3, AdditiveBlending, Mesh, Clock, NormalBlending } from "three"
+import { Scene, WebGLRenderer, ShaderMaterial, OrthographicCamera, PlaneGeometry, Texture, CanvasTexture, Vector3, Mesh, Clock, NormalBlending } from "three"
 
 const RainEffect = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -85,7 +85,6 @@ const RainEffect = () => {
         uniform float u_speed;
 
         #define S(a, b, t) smoothstep(a, b, t)
-        //#define CHEAP_NORMALS
         #define USE_POST_PROCESSING
 
         vec3 N13(float p) {
@@ -174,9 +173,7 @@ const RainEffect = () => {
             rainAmount = clamp(rainAmount + pulse, 0.0, 1.0);
           }
 
-          // 提前声明模糊变量，以便故事块可以修改它们
-          float maxBlur = mix(3., 6., rainAmount);
-          float minBlur = 2.;
+
 
 
           float zoom = -cos(T*.2);
@@ -186,38 +183,21 @@ const RainEffect = () => {
           float layer1 = S(.25, .75, rainAmount);
           float layer2 = S(.0, .5, rainAmount);
           vec2 c = Drops(uv, t, staticDrops, layer1, layer2);
-          #ifdef CHEAP_NORMALS
-            vec2 n = vec2(dFdx(c.x), dFdy(c.x));
-          #else
-            vec2 e = vec2(.001, 0.);
-            float cx = Drops(uv+e, t, staticDrops, layer1, layer2).x;
-            float cy = Drops(uv+e.yx, t, staticDrops, layer1, layer2).x;
-            vec2 n = vec2(cx-c.x, cy-c.x);
-          #endif
 
-          // textureLod需要GLSL3 / 显式版本；使用texture2D以兼容
-          float focus = mix(maxBlur-c.y, minBlur, S(.1, .2, c.x));
-          vec3 col = texture2D(iChannel0, UV+n).rgb;
+
+          vec3 col = texture2D(iChannel0, UV).rgb;
           #ifdef USE_POST_PROCESSING
           t = (T+3.)*.5;
           float colFade = sin(t*.2)*.5+.5;
           col *= mix(vec3(1.), vec3(.8, .9, 1.3), colFade);
-          // 禁用自动淡入；仅通过着色器输入控制全强度
           float fade = 1.0;
-          // 禁用闪电效果
-          // float lightning = 0.0;
-          // if (u_disable_lightning < 0.5 && rainAmount > 0.5) {
-          //   lightning = sin(t*sin(t*10.));
-          //   lightning *= pow(max(0., sin(t+sin(t))), 10.);
-          // }
-          // col *= 1.+lightning*fade*mix(1., .1, story*story);
           col *= 1.-dot(UV-=.5, UV);
 
           col *= fade;
           #endif
           // Make rain effect very subtle and transparent
           float rainIntensity = rainAmount * c.x;
-          float alpha = mix(0.0, 0.15, rainIntensity); // Very low opacity
+          float alpha = mix(0.0, 0.15, rainIntensity);
           
           // Soften the rain effect to not interfere with page content
           vec3 softCol = mix(col, vec3(1.0), 0.8); // Make colors softer
@@ -288,7 +268,7 @@ const RainEffect = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="z-[-1] fixed top-0 left-0 w-full h-full pointer-events-none"
+      className="z-[99999] fixed top-0 left-0 w-full h-full pointer-events-none"
     />
   )
 }
